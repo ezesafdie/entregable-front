@@ -15,10 +15,9 @@ const Listado = (props) => {
       {data.map((item) => (
         <Item
           key={item.id}
-          item={item}
-          setElementosCarrito={props.setElementosCarrito}
-          json={item}
           elementosCarrito={props.elementosCarrito}
+          setElementosCarrito={props.setElementosCarrito}
+          item={item}
         />
       ))}
     </div>

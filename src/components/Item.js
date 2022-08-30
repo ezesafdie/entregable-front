@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // El componente Item no tiene componentes hijos.
 // ESTADO: Item debe tener un número para almacenar la cantidad de stock, la misma se la defina el padre a la hora de crearlo.
@@ -11,33 +11,27 @@ import React from "react";
 //    button       (este boton debe permitir comprar, pero si la cantidad es menor a 0 debe estar deshabilitado y decir "Sin stock")
 
 const Item = (props) => {
-  const calcularStock = () => {
-    if (props.json.stock > 0) {
-      return props.json.stock;
-    } else {
-      return <span>Agotado</span>;
-    }
-  };
+  const [stock, setStock] = useState(props.item.stock);
 
   const restarStock = () => {
-    if (props.json.stock > 0) {
+    if (stock > 0) {
       props.setElementosCarrito(props.elementosCarrito + 1);
-      props.json.stock = props.json.stock - 1;
+      setStock(stock - 1);
     }
   };
 
   return (
     <div className="producto">
-      <h3>{props.json.producto.nombre}</h3>
-      <p>{props.json.producto.descripcion}</p>
-      <h5>En Stock: {calcularStock()}</h5>
+      <h3>{props.item.producto.nombre}</h3>
+      <p>{props.item.producto.descripcion}</p>
+      <h5>En Stock: {stock > 0 ? stock : <span>Agotado</span>}</h5>
       <button
         onClick={() => {
           restarStock();
         }}
-        disabled={props.json.stock <= 0}
+        disabled={stock <= 0}
       >
-        {props.json.stock > 0 ? "Comprar" : "Sin stock"}
+        {stock > 0 ? "Comprar" : "Sin stock"}
       </button>
     </div>
   );
